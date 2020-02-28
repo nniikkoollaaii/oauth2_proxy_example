@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: frontend
+  namespace: test
+  labels:
+    app: frontend
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+    nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host:30443/oauth2/start?rd=$escaped_request_uri"
+    #nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.test.svc.cluster.local:4180/oauth2/auth"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      auth_request_set $oauth2_proxy_upstream_1 $upstream_cookie__oauth2_proxy_1;
+
+      access_by_lua_block {
+      if ngx.var.oauth2_proxy_upstream_1 ~= "" then
+          ngx.header["Set-Cookie"] = "_oauth2_proxy_1=" .. ngx.var.oauth2_proxy_upstream_1 .. ngx.var.auth_cookie:match("(; .*)")
+      end
+      }
+spec:
+  tls:
+    - hosts:
+        - t<domain>
+      secretName: test-tls
+  rules:
+    - host: <domain>
+      http:
+        paths:
+          - path: /(/|$)(.*)
+            backend:
+              serviceName: frontend
+              servicePort: http

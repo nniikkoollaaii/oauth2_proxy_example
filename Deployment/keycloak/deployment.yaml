@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: test
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: "nniikkoollaaii/oauth2-proxy-example-keycloak:0.4.0"
+          ports:
+            - name: admin
+              containerPort: 9990
+              protocol: TCP
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: "PROXY_ADDRESS_FORWARDING"
+              value: "true"
+            - name: "KEYCLOAK_USER"
+              value: "admin"
+            - name: "KEYCLOAK_PASSWORD"
+              value: "admin"

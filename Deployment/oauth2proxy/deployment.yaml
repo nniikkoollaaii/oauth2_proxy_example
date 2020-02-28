@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+  namespace: test
+  labels:
+    app: oauth2-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      containers:
+        - name: oauth2-proxy
+          image: "quay.io/pusher/oauth2_proxy:v5.0.0"
+          ports:
+            - name: http
+              containerPort: 4180
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          env:
+            - name: OAUTH2_PROXY_CLIENT_ID
+              value: "oauth2_proxy"
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              value: "ae935dfc-f622-415a-a4d3-bae9bca82700"
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              value: "LzZmMzV5R2Z0RmRiMzlaQklZc0RqZz09"
+          args:
+            - --provider=oidc
+            - --email-domain=*
+            - --upstream=file:///dev/null
+            - --http-address=0.0.0.0:4180
+
+            - --redirect-url=https://<domain>:30443/oauth2/callback
+            - --oidc-issuer-url=https://<domain>:30443/auth/realms/test
+            - --ssl-insecure-skip-verify
+            - --scope=openid offline_access
+
+            - --cookie-secure=false
+            #damit Token weitergeleitet wird: https://groups.google.com/forum/#!topic/kubernetes-users/WoPgUfn6aLQ
+            - --set-xauthrequest
+            - --set-authorization-header
+            #- --pass-access-token
+            #- --pass-authorization-header
