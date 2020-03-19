@@ -18,17 +18,16 @@ public class Oauth2ResourceServerExampleConfiguration {
 
                 //This is used by the oauth2 library as a unique identifier of your microservice.
                 // It is used to verify that your service is the intended audience of a given JWT access token.
-                resources.resourceId("backend");
+                resources.resourceId("your-resource-id");
             }
 
             @Override
             public void configure(HttpSecurity http) throws Exception {
-                http.authorizeRequests().antMatchers("/**").permitAll();
+                //http.authorizeRequests().antMatchers("/**").authenticated();
                 //The scopes specified here should begin with your resourceId from above.
-                //http.authorizeRequests()
-                //        .antMatchers(HttpMethod.GET, "/api/read").access("#oauth2.clientHasRole('read')")
-                //        .antMatchers(HttpMethod.GET, "/api/create").access("#oauth2.clientHasRole('create')")
-                //        .antMatchers(HttpMethod.GET, "/test").permitAll();
+                http.authorizeRequests()
+                        .antMatchers(HttpMethod.GET,"/api/read").access("#oauth2.clientHasRole('testreadrole')")
+                        .antMatchers(HttpMethod.GET,"/api/create").access("#oauth2.clientHasRole('testcreaterole')");
             }
         };
     }

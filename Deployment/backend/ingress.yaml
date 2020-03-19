@@ -6,7 +6,6 @@ metadata:
   labels:
     app: backend
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
     #nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.test.svc.cluster.local:4180/oauth2/auth"
@@ -27,7 +26,7 @@ spec:
     - host: <domain>
       http:
         paths:
-          - path: /backend(/|$)(.*)
+          - path: /api
             backend:
               serviceName: backend
               servicePort: http

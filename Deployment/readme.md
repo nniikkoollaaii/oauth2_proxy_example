@@ -25,7 +25,58 @@ replace all <domain> with your domain
 
 and set local hosts file for your ip and this domain
 
-## deployment of keycloak
+## Identity Provider
+
+### using azure ad
+
+Create an application registration in azure ad
+use directory id from overview page as replacement <tenant>
+
+use application id from overview page as replacement for <client id>
+
+add a redirect uri:
+https://<domain>:30443/oauth2/callback
+
+create a client secret and use it as replacement for <client secret>
+
+
+add these roles to the app manifest:
+    "appRoles": [
+		{
+			"allowedMemberTypes": [
+				"User"
+			],
+			"description": "blabla",
+			"displayName": "Test-Create-Role",
+			"id": "4b7f8410-88da-41e5-b8d5-4df12606dbd4",
+			"isEnabled": true,
+			"lang": null,
+			"origin": "Application",
+			"value": "testcreaterole"
+		},
+		{
+			"allowedMemberTypes": [
+				"User"
+			],
+			"description": "blabla",
+			"displayName": "Test-Read-Role",
+			"id": "4b7f8410-88da-41e5-b8d5-4df12606dbd3",
+			"isEnabled": true,
+			"lang": null,
+			"origin": "Application",
+			"value": "testreadrole"
+		}
+	],
+
+
+
+add the user account, you're using to create this app registration, to one of these roles 
+
+Azure Active Directory > Users > your user > Applications 
+
+
+
+### using keycloak
 
 change registry address of image in keycloak/deployment.yaml
 
@@ -34,8 +85,10 @@ change registry address of image in keycloak/deployment.yaml
 your keycloak instance is reachable at https://localhost:30443/auth with kind
 (subpath "auth" cause default subpath for keycloak)
 
-## deployment of backend, frontend and oauth2_proxy
+
+    .\kubectl apply -f oauth2proxy-keycloak
+
+## deployment of backend, frontend
 
     .\kubectl apply -f frontend
     .\kubectl apply -f backend
-    .\kubectl apply -f oauth2proxy

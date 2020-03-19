@@ -18,8 +18,8 @@ you can setup a docker registry in a docker container
 or import the images manually with these commands
 
     .\kind load docker-image nniikkoollaaii/oauth2-proxy-example-keycloak:0.4.0
-    .\kind load docker-image nniikkoollaaii/oauth2-proxy-example-frontend:0.1.0
-    .\kind load docker-image nniikkoollaaii/oauth2-proxy-example-backend:0.1.0
+    .\kind load docker-image nniikkoollaaii/oauth2-proxy-example-frontend:0.3.0
+    .\kind load docker-image nniikkoollaaii/oauth2-proxy-example-backend:0.2.0
     .\kind load docker-image quay.io/pusher/oauth2_proxy:v5.0.0
 
 ## further links

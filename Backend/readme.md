@@ -1,18 +1,22 @@
 # Backend
 
+## set correct resource id
+
+set client id of this application in file Oauth2ResourceServerExampleConfiguration.java
+
 ## build image
 
     mvn package
 
     docker build -t nniikkoollaaii/oauth2-proxy-example-backend:0.1.0 .
 
-## push image to local registry for kind setup
-
-    docker tag nniikkoollaaii/oauth2-proxy-example-backend:0.1.0 localhost:5000/nniikkoollaaii/oauth2-proxy-example-backend:0.1.0
-
-    docker push localhost:5000/nniikkoollaaii/oauth2-proxy-example-backend:0.1.0
-
 ## further links
 
 https://pivotal.io/application-modernization-recipes/security/setting-up-oauth2-resource-server
 https://www.devglan.com/spring-security/spring-oauth2-role-based-authorization
+
+
+## test auth token
+
+docker run --rm --name test -p 8080:8080 nniikkoollaaii/oauth2-proxy-example-backend:0.1.0
+curl -v -H "authorization : Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkhsQzBSMTJza3hOWjFXUXdtak9GXzZ0X3RERSJ9.eyJhdWQiOiI0ZTRiZWI5ZC1jOTIwLTQ2Y2ItYWNkNC05MjEwM2RjYTAxYTAiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOGQzZGU2YzYtYzU1OS00YTlkLWI5Y2EtZGFmN2M2MTYyNTEyL3YyLjAiLCJpYXQiOjE1ODI5OTU0NzgsIm5iZiI6MTU4Mjk5NTQ3OCwiZXhwIjoxNTgyOTk5Mzc4LCJhaW8iOiJBV1FBbS84T0FBQUFyYmh3S0Q1aEtHNWU5blF5QU9QK0tGNm5ZakRGWVVPMmdkMnY5SnpGU0NKQTJBRXU5M0dmWFhKbTB2TWloRW1PV0FDN3lRSEVqblo1Zkh1RzVwcWtEQlYxNVgyVk0wVStyaFQ5Wm1ZVStmNlU5YkNCdEpXZ1lIVU4zNVdHazhKVyIsImVtYWlsIjoibi5zZWlwQGZyYXBvcnQuZGUiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC85MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQvIiwibmFtZSI6Im4uc2VpcEBmcmFwb3J0LmRlIDMyMWRhZjY0LTllNDItNDAxYi04YmNjLTRmZDUyNjViNTRkOSIsIm9pZCI6IjE4YmQ0NDc5LTYyYzEtNDYwZS05NTc4LTFhZmRlZjUzNDk4MCIsInByZWZlcnJlZF91c2VybmFtZSI6Im4uc2VpcEBmcmFwb3J0LmRlIiwicm9sZXMiOlsidGVzdHJlYWRyb2xlIl0sInN1YiI6Ind6UzhGMjI0Q2pxa3dKOVBPVkVNVGhDMm1WWUxZVHBFOFozZEd1WjFpQUUiLCJ0aWQiOiI4ZDNkZTZjNi1jNTU5LTRhOWQtYjljYS1kYWY3YzYxNjI1MTIiLCJ1dGkiOiJ6QmZUQ2xkQlFrYVEyZWNmVzhRckFBIiwidmVyIjoiMi4wIn0.uVWGTn5W8TrhgUzl3CLlIdVj90V5YO46r-9Xrufga9YfnTgliCuY1dwoevXB3h7cdN1-Zb4679XaUrmpMMMpKR_7zHCfWLAm7IkTmfN2r3bcyH06FEFQZ4JGLzzTFBvmCkTwoO73JprvyizeuHWk8hiJcnSsTqk1c17uTnJyrbslD8YiOjQMMp_IYAs9eQR-GDDYu0pF4knSgqmrpVIRu2C0DVeq3RU4qcvRckPedPlYVUz8Na9NeqbZ2NIn8UqLonFVcGqNK6fSDFUsR8CFg_nq0fvYslI_B9JlywTJ8YKMTFtCnKnaX9UhI1Owr2fChva3xeRVTroOoKt1jrEoDg" localhost:8080/api/test

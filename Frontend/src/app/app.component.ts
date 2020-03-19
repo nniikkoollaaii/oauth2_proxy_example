@@ -40,7 +40,7 @@ export class AppComponent {
     );
   }
   callTestApiEndpoint() {
-    this.client.get("/test").subscribe(
+    this.client.get("/api/test").subscribe(
       data => {
         this.readResult = "200";
       },

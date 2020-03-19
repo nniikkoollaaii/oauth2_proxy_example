@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: ingress-nginx-configuration
+  name: nginx-configuration
   namespace: ingress-nginx
   labels:
     app.kubernetes.io/name: ingress-nginx
@@ -9,3 +9,6 @@ metadata:
 data:
   proxy-buffer-size: "16k"
   http2-max-field-size: "16k"
+  #http2-max-header-size: "128k"
+  #client-header-buffer-size: "16k"
+  large-client-header-buffers: "4 16k"
