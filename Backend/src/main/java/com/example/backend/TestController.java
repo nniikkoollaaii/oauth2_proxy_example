@@ -19,6 +19,7 @@ public class TestController {
     @Secured({"testreadrole"})
     @GetMapping("/api/read")
     public void read() {
+        System.out.println("/api/read");
         return;
     }
 
@@ -26,13 +27,14 @@ public class TestController {
     @Secured({"testcreaterole"})
     @GetMapping("/api/create")
     public void create() {
+        System.out.println("/api/create");
         return;
     }
 
     @GetMapping("/api/test")
     public void test(HttpServletRequest req) {
         List<String> headers = Collections.list(req.getHeaderNames());
-        System.out.print("Print Headers");
+        System.out.println("Print Headers");
         for (String s : headers) {
             System.out.print(s + " : " + req.getHeader(s) + "\n");
         }

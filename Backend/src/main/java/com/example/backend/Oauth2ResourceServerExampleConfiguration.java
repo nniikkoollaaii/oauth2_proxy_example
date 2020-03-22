@@ -18,7 +18,7 @@ public class Oauth2ResourceServerExampleConfiguration {
 
                 //This is used by the oauth2 library as a unique identifier of your microservice.
                 // It is used to verify that your service is the intended audience of a given JWT access token.
-                resources.resourceId("your-resource-id");
+                resources.resourceId("oauth2_proxy");
             }
 
             @Override
@@ -27,7 +27,8 @@ public class Oauth2ResourceServerExampleConfiguration {
                 //The scopes specified here should begin with your resourceId from above.
                 http.authorizeRequests()
                         .antMatchers(HttpMethod.GET,"/api/read").access("#oauth2.clientHasRole('testreadrole')")
-                        .antMatchers(HttpMethod.GET,"/api/create").access("#oauth2.clientHasRole('testcreaterole')");
+                        .antMatchers(HttpMethod.GET,"/api/create").access("#oauth2.clientHasRole('testcreaterole')")
+                        .antMatchers(HttpMethod.GET, "/api/test").anonymous();
             }
         };
     }

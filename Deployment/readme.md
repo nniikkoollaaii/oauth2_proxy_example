@@ -17,7 +17,7 @@ and change your ingress host
 
     docker cp openssl:/app/. ./frontend/certs
 
-    kubectl create secret tls test-tls --key ./frontend/certs/key.pem --cert ./frontend/certs/cert.pem -n test
+    .\kubectl create secret tls test-tls --key ./frontend/certs/key.pem --cert ./frontend/certs/cert.pem -n test
 
 ## replace with your domain
 
@@ -74,19 +74,21 @@ add the user account, you're using to create this app registration, to one of th
 
 Azure Active Directory > Users > your user > Applications 
 
-
+	.\kubectl apply -f oauth2proxy-azuread
 
 ### using keycloak
 
 change registry address of image in keycloak/deployment.yaml
 
-    .\kubectl apply -f keycloak
+	.\kubectl apply -f keycloak
 
-your keycloak instance is reachable at https://localhost:30443/auth with kind
 (subpath "auth" cause default subpath for keycloak)
 
 
     .\kubectl apply -f oauth2proxy-keycloak
+
+
+
 
 ## deployment of backend, frontend
 

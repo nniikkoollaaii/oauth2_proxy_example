@@ -4,9 +4,14 @@
 
 replace <redirecturl host> in .template file
 
+## offline access token
+
+https://github.com/keycloak/keycloak-documentation/blob/master/server_admin/topics/sessions/offline.adoc
+"To be able to issue an offline token, users need to have the role mapping for the realm-level role offline_access"
+
 ## build image
 
-    docker build -t nniikkoollaaii/oauth2-proxy-example-keycloak:0.4.0 .
+    docker build -t nniikkoollaaii/oauth2-proxy-example-keycloak:0.5.0 .
 
 ## test run image
 

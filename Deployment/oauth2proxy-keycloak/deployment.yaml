@@ -42,15 +42,32 @@ spec:
             - --email-domain=*
             - --upstream=file:///dev/null
             - --http-address=0.0.0.0:4180
-
             - --redirect-url=https://<domain>:30443/oauth2/callback
             - --oidc-issuer-url=https://<domain>:30443/auth/realms/test
             - --ssl-insecure-skip-verify
-            - --scope=openid offline_access
-
+            #- --scope=openid offline_access
             - --cookie-secure=false
-            #damit Token weitergeleitet wird: https://groups.google.com/forum/#!topic/kubernetes-users/WoPgUfn6aLQ
-            - --set-xauthrequest
+            #- --set-xauthrequest
             - --set-authorization-header
-            #- --pass-access-token
-            #- --pass-authorization-header
+
+            # set Endpoints
+            # getting Error in Keycloak when exchanging code for token if not set manually
+            - --login-url=https://<domain>:30443/auth/realms/test/protocol/openid-connect/auth
+            - --redeem-url=https://<domain>:30443/auth/realms/test/protocol/openid-connect/token
+            - --validate-url=https://<domain>:30443/auth/realms/test/protocol/openid-connect/userinfo
+            
+
+            # Keycloak Provider
+            #- --provider=keycloak
+            #- --login-url=https://<domain>:30443/auth/realms/test/protocol/openid-connect/auth
+            #- --redeem-url=https://<domain>:30443/auth/realms/test/protocol/openid-connect/token
+            #- --validate-url=https://<domain>:30443/auth/realms/test/protocol/openid-connect/userinfo
+            #- --keycloak-group=/test
+            #- --redirect-url=https://<domain>:30443/oauth2/callback
+            #- --http-address=0.0.0.0:4180
+            #- --email-domain=*
+            #- --ssl-insecure-skip-verify
+            #- --scope=openid offline_access  profile email
+            #- --cookie-secure=false
+            #- --set-xauthrequest
+            #- --set-authorization-header

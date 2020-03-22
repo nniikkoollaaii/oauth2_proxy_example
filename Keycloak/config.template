@@ -71,24 +71,38 @@
             "username" : "testreaduser",
             "enabled": true,
             "emailVerified" : true,
+            "email" : "testreaduser@test.com",
             "credentials" : [
                 { "type" : "password",
                 "value" : "testreaduser" }
             ],
-            "realmRoles" : [ "read" ]
+            "realmRoles" : [ "read", "offline_access" ],
+            "groups" : [ "/test" ]
         },
         {
             "username" : "testcreateuser",
             "enabled": true,
             "emailVerified" : true,
+            "email" : "testcreateuser@test.com",
             "credentials" : [
                 { "type" : "password",
                 "value" : "testcreateuser" }
             ],
-            "realmRoles" : [ "create" ]
+            "realmRoles" : [ "create", "offline_access" ],
+            "groups" : [ "/test" ]
         }
     ],
-  "groups": [],
+  "groups": [
+    {
+    "id" : "0a2f19b3-9868-419b-9e3e-c14e9db07cb2",
+    "name" : "test",
+    "path" : "/test",
+    "attributes" : { },
+    "realmRoles" : [ ],
+    "clientRoles" : { },
+    "subGroups" : [ ]
+    }
+  ],
   "requiredCredentials": [
     "password"
   ],
@@ -112,7 +126,7 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "ae935dfc-f622-415a-a4d3-bae9bca82700",
       "redirectUris": [
-        "https://<redirecturl host>:30443/*"
+        "https://<domain>:30443/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -203,6 +217,20 @@
             "access.token.claim": "true",
             "claim.name": "preferred_username",
             "jsonType.label": "String"
+          }
+        },
+        {
+          "id" : "f9c6b030-e0e7-4280-bbe0-21bd62e07a54",
+          "name" : "groups",
+          "protocol" : "openid-connect",
+          "protocolMapper" : "oidc-group-membership-mapper",
+          "consentRequired" : false,
+          "config" : {
+            "full.path" : "true",
+            "id.token.claim" : "true",
+            "access.token.claim" : "true",
+            "claim.name" : "groups",
+            "userinfo.token.claim" : "true"
           }
         },
         {
