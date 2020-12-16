@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: "nniikkoollaaii/oauth2-proxy-example-backend:0.2.0"
+          image: "nniikkoollaaii/oauth2-proxy-example-backend:0.1.0"
           ports:
             - name: http
               containerPort: 8080

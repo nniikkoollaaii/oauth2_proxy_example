@@ -9,15 +9,10 @@
 propaply you have to add your registry's address in the image
 and change your ingress host
 
-## generate certs
 
-    docker run -it --name openssl --rm --workdir "/app" --entrypoint /bin/sh -d frapsoft/openssl
+## create cert secret
 
-    docker exec -it openssl /bin/sh -c "openssl req -x509 -nodes -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -subj '/CN=<domain>/O=<domain>'"
-
-    docker cp openssl:/app/. ./frontend/certs
-
-    .\kubectl create secret tls test-tls --key ./frontend/certs/key.pem --cert ./frontend/certs/cert.pem -n test
+    .\kubectl create secret tls test-tls --key ../Certs/app/app.key --cert ../Certs/app/app.crt -n test
 
 ## replace with your domain
 

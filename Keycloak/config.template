@@ -4,7 +4,7 @@
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
-  "accessTokenLifespan": 300,
+  "accessTokenLifespan": 1800,
   "accessTokenLifespanForImplicitFlow": 900,
   "ssoSessionIdleTimeout": 1800,
   "ssoSessionMaxLifespan": 36000,
@@ -36,7 +36,7 @@
     "realm": [
       {
         "id": "7630acff-22fa-443d-beb4-5dcaf26d5e71",
-        "name": "read",
+        "name": "ROLE_READ",
         "description": "Test Read-Role",
         "scopeParamRequired": false,
         "composite": false,
@@ -45,7 +45,7 @@
       },
       {
         "id": "8da9704e-5af4-474d-bddf-0520390ff1bb",
-        "name": "create",
+        "name": "ROLE_CREATE",
         "description": "Test create role",
         "scopeParamRequired": false,
         "composite": false,
@@ -76,7 +76,7 @@
                 { "type" : "password",
                 "value" : "testreaduser" }
             ],
-            "realmRoles" : [ "read", "offline_access" ],
+            "realmRoles" : [ "ROLE_READ", "offline_access" ],
             "groups" : [ "/test" ]
         },
         {
@@ -88,7 +88,7 @@
                 { "type" : "password",
                 "value" : "testcreateuser" }
             ],
-            "realmRoles" : [ "create", "offline_access" ],
+            "realmRoles" : [ "ROLE_CREATE", "offline_access" ],
             "groups" : [ "/test" ]
         }
     ],
@@ -155,6 +155,20 @@
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
       "protocolMappers": [
+        {
+          "id": "71f0e70b-b2b5-4896-bc0c-28166bbb93ed",
+          "name": "CustomUserRealmRoleMapping",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "multivalued": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
         {
           "id": "14ca20ac-7365-4390-b7e6-df2f28f27986",
           "name": "email",
@@ -913,7 +927,7 @@
     "maxFailureWaitSeconds": "900",
     "minimumQuickLoginWaitSeconds": "60",
     "failureFactor": "30",
-    "actionTokenGeneratedByUserLifespan": "300",
+    "actionTokenGeneratedByUserLifespan": "3600",
     "maxDeltaTimeSeconds": "43200",
     "_browser_header.xContentTypeOptions": "nosniff",
     "actionTokenGeneratedByAdminLifespan": "43200",

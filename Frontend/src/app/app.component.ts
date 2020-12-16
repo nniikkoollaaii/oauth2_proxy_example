@@ -8,8 +8,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 export class AppComponent {
   title = "frontend";
 
-  readResult = "";
-  createResult = "";
+  result = "";
 
   constructor(private client: HttpClient) {}
 
@@ -17,11 +16,11 @@ export class AppComponent {
     console.log("test");
     this.client.get("/api/read").subscribe(
       data => {
-        this.readResult = "200";
+        this.result = "200";
       },
       err => {
         if (err instanceof HttpErrorResponse) {
-          this.readResult = err.status + "";
+          this.result = err.status + ": " + err.message;
         }
       }
     );
@@ -30,11 +29,11 @@ export class AppComponent {
   callCreateApiEndpoint() {
     this.client.get("/api/create").subscribe(
       data => {
-        this.readResult = "200";
+        this.result = "200";
       },
       err => {
         if (err instanceof HttpErrorResponse) {
-          this.readResult = err.status + "";
+          this.result = err.status + ": " + err.message;
         }
       }
     );
@@ -42,11 +41,11 @@ export class AppComponent {
   callTestApiEndpoint() {
     this.client.get("/api/test").subscribe(
       data => {
-        this.readResult = "200";
+        this.result = "200";
       },
       err => {
         if (err instanceof HttpErrorResponse) {
-          this.readResult = err.status + "";
+          this.result = err.status + ": " + err.message;
         }
       }
     );

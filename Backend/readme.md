@@ -6,11 +6,17 @@ set client id of this application in file Oauth2ResourceServerExampleConfigurati
 
 ## build image
 
-    mvn package
+    mvn package -DskipTests
+
+skip tests because test tries to get jwks-uri with self signed certificate, which is not imported in your OS kestore
+but I added it to your java keystore in the docker image
 
     docker build -t nniikkoollaaii/oauth2-proxy-example-backend:0.1.0 .
 
+    docker run --name test --rm -p 8080:8080 nniikkoollaaii/oauth2-proxy-example-backend:0.1.0
+
 ## further links
+Spring Security Docs https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/#oauth2-boot-resource-server-authorization
 
 https://pivotal.io/application-modernization-recipes/security/setting-up-oauth2-resource-server
 https://www.devglan.com/spring-security/spring-oauth2-role-based-authorization
@@ -19,4 +25,11 @@ https://www.devglan.com/spring-security/spring-oauth2-role-based-authorization
 ## test auth token
 
 docker run --rm --name test -p 8080:8080 nniikkoollaaii/oauth2-proxy-example-backend:0.1.0
-curl -v -H "authorization : Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkhsQzBSMTJza3hOWjFXUXdtak9GXzZ0X3RERSJ9.eyJhdWQiOiI0ZTRiZWI5ZC1jOTIwLTQ2Y2ItYWNkNC05MjEwM2RjYTAxYTAiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOGQzZGU2YzYtYzU1OS00YTlkLWI5Y2EtZGFmN2M2MTYyNTEyL3YyLjAiLCJpYXQiOjE1ODI5OTU0NzgsIm5iZiI6MTU4Mjk5NTQ3OCwiZXhwIjoxNTgyOTk5Mzc4LCJhaW8iOiJBV1FBbS84T0FBQUFyYmh3S0Q1aEtHNWU5blF5QU9QK0tGNm5ZakRGWVVPMmdkMnY5SnpGU0NKQTJBRXU5M0dmWFhKbTB2TWloRW1PV0FDN3lRSEVqblo1Zkh1RzVwcWtEQlYxNVgyVk0wVStyaFQ5Wm1ZVStmNlU5YkNCdEpXZ1lIVU4zNVdHazhKVyIsImVtYWlsIjoibi5zZWlwQGZyYXBvcnQuZGUiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC85MTg4MDQwZC02YzY3LTRjNWItYjExMi0zNmEzMDRiNjZkYWQvIiwibmFtZSI6Im4uc2VpcEBmcmFwb3J0LmRlIDMyMWRhZjY0LTllNDItNDAxYi04YmNjLTRmZDUyNjViNTRkOSIsIm9pZCI6IjE4YmQ0NDc5LTYyYzEtNDYwZS05NTc4LTFhZmRlZjUzNDk4MCIsInByZWZlcnJlZF91c2VybmFtZSI6Im4uc2VpcEBmcmFwb3J0LmRlIiwicm9sZXMiOlsidGVzdHJlYWRyb2xlIl0sInN1YiI6Ind6UzhGMjI0Q2pxa3dKOVBPVkVNVGhDMm1WWUxZVHBFOFozZEd1WjFpQUUiLCJ0aWQiOiI4ZDNkZTZjNi1jNTU5LTRhOWQtYjljYS1kYWY3YzYxNjI1MTIiLCJ1dGkiOiJ6QmZUQ2xkQlFrYVEyZWNmVzhRckFBIiwidmVyIjoiMi4wIn0.uVWGTn5W8TrhgUzl3CLlIdVj90V5YO46r-9Xrufga9YfnTgliCuY1dwoevXB3h7cdN1-Zb4679XaUrmpMMMpKR_7zHCfWLAm7IkTmfN2r3bcyH06FEFQZ4JGLzzTFBvmCkTwoO73JprvyizeuHWk8hiJcnSsTqk1c17uTnJyrbslD8YiOjQMMp_IYAs9eQR-GDDYu0pF4knSgqmrpVIRu2C0DVeq3RU4qcvRckPedPlYVUz8Na9NeqbZ2NIn8UqLonFVcGqNK6fSDFUsR8CFg_nq0fvYslI_B9JlywTJ8YKMTFtCnKnaX9UhI1Owr2fChva3xeRVTroOoKt1jrEoDg" localhost:8080/api/test
+
+curl -v -H "Authorization: Bearer <token>" localhost:8080/api/test
+
+
+get token via client credentials flow
+
+
+curl -v --insecure https://<domain>:30443/auth/realms/test/protocol/openid-connect/token -d "grant_type=client_credentials&client_id=oauth2_proxy&client_secret=ae935dfc-f622-415a-a4d3-bae9bca82700"
